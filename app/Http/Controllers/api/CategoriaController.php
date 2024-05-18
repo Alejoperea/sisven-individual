@@ -66,7 +66,7 @@ class CategoriaController extends Controller
     {
         //
         $validate = Validator::make($request->all(), [
-            'name' => ['required', 'max:30', 'unique:categorias'],
+            'name' => ['required', 'max:30', 'unique:paymodes'],
             'description' => ['required', 'max:255']
         ]);
 
