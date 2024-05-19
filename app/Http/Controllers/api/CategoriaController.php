@@ -16,7 +16,7 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        $categorias = DB::table('categories')->get();
+        // $categorias = DB::table('categories')->get(); // cambiar luego quitarle las comillas
         return json_encode( ['categorias' => $categorias]);
     }
 
@@ -25,17 +25,17 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'name' => ['required', 'max:30', 'unique:categorias'],
-            'description' => ['required', 'max:255']
-        ]);
+        // $validate = Validator::make($request->all(), [
+        //     'name' => ['required', 'max:30', 'unique:categorias'],
+        //     'description' => ['required', 'max:255']
+        // ]);
 
-        if ($validate->fails()) {
-            return response()->json([
-                'msg' => 'Se produjo un error en la validación de la información.',
-                'statusCode' => 400
-            ]);
-        }
+        // if ($validate->fails()) {
+        //     return response()->json([
+        //         'msg' => 'Se produjo un error en la validación de la información.',
+        //         'statusCode' => 400
+        //     ]);
+        // }
 
         $categoria = new Categoria();
 
@@ -43,7 +43,7 @@ class CategoriaController extends Controller
         $categoria -> description = $request-> description;
         $categoria->save();
 
-        return json_encode(['categorias' => $categoria]);
+        return json_encode(['categoria' => $categoria]);
     }
 
     /**
@@ -52,11 +52,11 @@ class CategoriaController extends Controller
     public function show(string $id)
     {
         $categoria = Categoria::find($id);
-        if(is_null($categoria)){
-            return abort(404);
-        }
+        // if(is_null($categoria)){
+        //     return abort(404);
+        // }
 
-        return json_encode(['categorias'=> $categoria]);
+         return json_encode(['categoria'=> $categoria]);
     }
 
     /**
@@ -65,27 +65,27 @@ class CategoriaController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $validate = Validator::make($request->all(), [
-            'name' => ['required', 'max:30', 'unique:paymodes'],
-            'description' => ['required', 'max:255']
-        ]);
+        // $validate = Validator::make($request->all(), [
+        //     'name' => ['required', 'max:30', 'unique:paymodes'],
+        //     'description' => ['required', 'max:255']
+        // ]);
 
-        if ($validate->fails()) {
-            return response()->json([
-                'msg' => 'Se produjo un error en la validación de la información.',
-                'statusCode' => 400
-            ]);
-        }
+        // if ($validate->fails()) {
+        //     return response()->json([
+        //         'msg' => 'Se produjo un error en la validación de la información.',
+        //         'statusCode' => 400
+        //     ]);
+        // }
 
         $categoria = Categoria::find($id);
         $categoria -> name = $request -> name;
         $categoria -> description = $request-> description;
         $categoria ->  save();
 
-        $categorias = DB::table('categories')
+        $categoria = DB::table('categories')
         ->orderBy('name')
         ->get();
-        return json_encode (['categorias' => $categorias]);
+        return json_encode (['categoria' => $categoria]);
     }
 
     /**
@@ -97,11 +97,11 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
         $categoria->delete();
 
-        $categorias = DB::table('categories')
+        $categoria = DB::table('categories')
         ->orderBy('name')
         ->get();
 
-        return json_encode (['categorias' => $categorias]);
+        return json_encode (['categoria' => $categoria]);
 
     }
 }
