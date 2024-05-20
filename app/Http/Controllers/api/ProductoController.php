@@ -16,10 +16,22 @@ class ProductoController extends Controller
     public function index()
     {
         //
-        $productos = DB::table('products')->get();
+        // $productos = DB::table('products')
+        // ->join('categories','products.id', '=','categories.id')
+        // ->select('')
+        // ->get();
 
-        return json_encode(['productos' => $productos]);
-    }
+        // return json_encode(['productos' => $productos]);
+        
+        $productos = DB::table('products')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*', 'categories.name as category_name')
+        ->get();
+
+       
+             return response()->json(['productos' => $productos], 200);
+    }   
+    
 
     /**
      * Store a newly created resource in storage.
@@ -58,11 +70,16 @@ class ProductoController extends Controller
     public function show(string $id)
     {
         //
-        $productos = Producto::find($id);
-        if(is_null($productos))
-        {
-            return abort(400);
-        };
+        $producto = Producto::find($id);
+        $categoria =DB::table('categories')
+        ->orderBy('name')
+        ->get();
+        // if(is_null($productos))
+        // {
+        //     return abort(400);
+        // };
+
+        return json_encode(['producto' => $producto, 'categoria' =>$categoria]);
     }
 
     /**
