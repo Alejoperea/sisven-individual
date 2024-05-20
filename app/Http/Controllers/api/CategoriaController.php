@@ -17,7 +17,7 @@ class CategoriaController extends Controller
     {
         $categorias = Categoria::all();
         // $categorias = DB::table('categories')->get(); // cambiar luego quitarle las comillas
-        return json_encode( ['categorias' => $categorias]);
+        return json_encode( ['categorias' => $categorias]); 
     }
 
     /**
